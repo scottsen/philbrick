@@ -34,22 +34,40 @@ Build the first modular analog/digital hybrid computing platform - a universal s
 - [ ] Protocol specification v0.1
 - [ ] Reference module specifications
 
-### Week 2: Dev Board Design
-- [ ] **Universal Dev Board v1.0**
-  - Cortex-M4 selection (STM32F4 or similar)
-  - Power regulation circuit (48V → 12V → 5V → 3.3V)
-  - 10-pin connector interface (JST-PH or similar)
-  - ADC/DAC selection and placement
-  - USB-C connector with programming
-  - I²C/SPI bus interface
-  - Dual analog/digital ground domains
-  - Protection circuits (ESD, overvoltage, reverse polarity)
-  - **Target BOM**: $2.50-3.50
+### Week 2: Dev Board Design (In Progress)
+- [x] **Universal Dev Board v1.0 - Design Documentation**
+  - [x] Complete specifications (see `docs/architecture/DEV_BOARD_SPECIFICATION.md`)
+  - [x] Block diagram and signal flows (see `docs/architecture/DEV_BOARD_BLOCK_DIAGRAM.md`)
+  - [x] Component selection with part numbers (see `docs/architecture/DEV_BOARD_COMPONENTS.md`)
+  - [x] MCU selection: **RP2040** (dual Cortex-M0+, $1, excellent USB support)
+  - [x] Power design: 12-24V input → +5V (switching) → ±15V (TPS65131) + 3.3V analog/digital (LDOs)
+  - [x] 10-pin connector interface: 2x5 header, 0.1" pitch (per architecture standard)
+  - [x] ADC selection: 2x ADS1115 (16-bit, I2C, 6 channels total)
+  - [x] DAC selection: MCP4728 (12-bit quad, I2C, 4 channels)
+  - [x] USB-C connector for power + programming
+  - [x] I²C interfaces for ADC, DAC, optional OLED, optional operators
+  - [x] Dual analog/digital ground topology (star grounding, ferrite bead isolation)
+  - [x] Protection circuits: TVS diodes, current limiting, reverse polarity protection
+  - [x] **Actual BOM**: ~$48 (qty 10, excluding PCB)
+  - [x] Reading guide for dev board design (see `docs/architecture/DEV_BOARD_READING_GUIDE.md`)
 
-- [ ] **Schematic Design**
-  - KiCad schematics for dev board
-  - Review with community
-  - Iterate based on feedback
+- [ ] **Schematic Design** (Next Step)
+  - [ ] Set up KiCad project
+  - [ ] Power supply schematic (TPS54331 buck, TPS65131 ±15V, LDOs)
+  - [ ] Analog input chains (6x: protection → buffer → level shift → ADC)
+  - [ ] Analog output chains (4x: DAC → level shift → buffer → output)
+  - [ ] MCU and support circuitry (RP2040 + flash + USB)
+  - [ ] Operator interface connectors (6x 10-pin headers)
+  - [ ] Review with community
+  - [ ] Iterate based on feedback
+
+- [ ] **PCB Layout** (Future)
+  - [ ] Component placement (analog/digital separation)
+  - [ ] 4-layer stackup (signal/ground/power/signal)
+  - [ ] Power and ground routing
+  - [ ] Signal routing with proper isolation
+  - [ ] Design rule check
+  - [ ] Generate Gerbers for fabrication
 
 ### Week 3: Reference Modules
 - [ ] **SumBlock Module** (analog summer)
@@ -95,8 +113,9 @@ Build the first modular analog/digital hybrid computing platform - a universal s
 
 **Deliverables**:
 - [x] Complete documentation (vision, architecture, primitives)
+- [x] Universal dev board design documentation (specifications, block diagram, BOM)
+- [ ] Universal dev board schematics (KiCad, in progress)
 - [ ] 4 reference module designs (schematics + PCBs)
-- [ ] Universal dev board design
 - [ ] Firmware templates
 - [ ] Working prototype demonstrating composition
 

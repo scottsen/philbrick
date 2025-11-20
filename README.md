@@ -122,15 +122,17 @@ Everything else emerges through composition.
 ## Technical Highlights
 
 ### Power Architecture
-- **48V backbone** (high headroom, low noise, industry standard)
-- On-module regulation (±12V, +5V, +3.3V)
-- Separate analog/digital ground domains
+- **48V system backbone** (for large installations with many modules)
+- **12-24V dev board input** (USB-C or barrel jack for prototyping)
+- On-module regulation to ±15V analog, +5V, +3.3V
+- Separate analog/digital ground domains with star topology
 
-### Pin Standard
-- **10-pin universal standard** (AIN, AOUT, AVDD, DVDD, AGND, DGND, CV, CTRL, CLK, ID/RESET)
+### Pin Standard (Finalized)
+- **10-pin universal connector** (2x5, 0.1" pitch header)
+- **Pinout**: +15V, -15V, GND, INPUT_A, INPUT_B, OUTPUT, SENSE, ENABLE, I2C_SDA, I2C_SCL
 - Proper analog/digital isolation from day one
 - Supports pure analog, pure digital, and hybrid modules
-- JST-PH or similar connectors (~$0.10-0.20 per module)
+- Standard IDC ribbon cable compatible (~$0.10-0.20 per connector)
 
 ### Latency Protocol
 - **Automatic latency measurement** along signal chains
@@ -145,11 +147,13 @@ Everything else emerges through composition.
 - Modules declare vendor, type, modes, latency, capabilities
 - Controller builds routing graph automatically
 
-### Universal Dev Board
-- **Cheap Cortex-M MCU** ($0.10 - $1.50)
-- Total BOM ~$2.50, sell for $5-10
-- Built-in power regulation, ADC/DAC, USB-C
-- Makes module building accessible to **software people**
+### Universal Dev Board (Design Complete ✅)
+- **RP2040 MCU** (dual Cortex-M0+, ~$1)
+- **16-bit ADC** (ADS1115, 6 channels) + **12-bit DAC** (MCP4728, 4 channels)
+- **±15V power** for operators, power regulation, USB-C connectivity
+- **Total BOM ~$48** (qty 10, complete dev board with 6 operator channels)
+- See [Dev Board Documentation](docs/architecture/DEV_BOARD_README.md)
+- Makes analog computing accessible to **software people** and **makers**
 
 ---
 
@@ -196,42 +200,42 @@ Total Latency: ~11ms (acceptable for non-feedback path)
 ### Documentation
 
 **Start Here:**
-- [Vision & Philosophy](docs/vision/) - The big picture and why this matters
-- [Architecture Overview](docs/architecture/) - Technical design and layers
-- [The Four Primitives](docs/primitives/) - Core operations explained
+- [Vision & Philosophy](docs/vision/00-VISION.md) - The big picture and why this matters
+- [Architecture Overview](docs/architecture/00-OVERVIEW.md) - Technical design and seven layers
+- [The Four Primitives](docs/primitives/OPERATOR_PRIMITIVES.md) - Core operations explained
 
-**Build Your First Module:**
-- [Hardware Getting Started](docs/hardware/00-GETTING-STARTED.md)
-- [Dev Board Specification](docs/hardware/01-DEV-BOARD.md)
-- [Firmware Quickstart](docs/firmware/00-GETTING-STARTED.md)
-- [Build First Module Guide](docs/guides/build-first-module.md)
+**Dev Board Design (Complete):**
+- [Dev Board Overview](docs/architecture/DEV_BOARD_README.md) - Start here for hardware
+- [Reading Guide](docs/architecture/DEV_BOARD_READING_GUIDE.md) - What to read and when
+- [Specifications](docs/architecture/DEV_BOARD_SPECIFICATION.md) - Requirements and subsystems
+- [Block Diagram](docs/architecture/DEV_BOARD_BLOCK_DIAGRAM.md) - System architecture
+- [Components & BOM](docs/architecture/DEV_BOARD_COMPONENTS.md) - Parts list with costs
 
-**Go Deeper:**
-- [Module Specifications](docs/modules/)
-- [Protocol Documentation](docs/protocols/)
-- [Research Topics](docs/research/)
-- [Business Strategy](docs/business/)
+**Additional Documentation:**
+- [The Pantheon](docs/vision/01-PANTHEON.md) - Tooling and ecosystem vision
+- [Morphogen Bridge](docs/vision/03-MORPHOGEN-BRIDGE.md) - Software/hardware integration
 
 ### Quick Links
 
-- 📖 [Full Documentation](docs/)
-- 🔧 [Hardware Designs](hardware/)
-- 💻 [Firmware Templates](firmware/templates/)
-- 🎓 [Examples](examples/)
-- 🛠️ [Tools](tools/)
-- 🤝 [Contributing](CONTRIBUTING.md)
-- 🗺️ [Roadmap](ROADMAP.md)
+- 📖 [Full Documentation](docs/) - All documentation organized by topic
+- 🗺️ [Roadmap](ROADMAP.md) - Development timeline and current status
+- 🔧 [Dev Board Docs](docs/architecture/DEV_BOARD_README.md) - Hardware design (complete)
+- 🧠 [Vision Docs](docs/vision/) - Philosophy and long-term goals
+- ⚡ [Operator Primitives](docs/primitives/) - Core building blocks
 
 ---
 
 ## Roadmap
 
-### Phase 1: Prove the Concept (Weeks 1-4)
+### Phase 1: Prove the Concept (Weeks 1-4) - **IN PROGRESS**
 - [x] Define final pin standard (10-pin universal standard adopted)
+- [x] **Dev board design documentation complete** (specs, block diagram, BOM)
+- [ ] Dev board schematics (KiCad) - **NEXT STEP**
 - [ ] Build 4 primitive modules (sum, integrate, nonlinearity, trigger)
-- [ ] Create reference dev board design with 10-pin interface
 - [ ] Implement basic latency protocol
 - [ ] Demonstrate composition: simple modules → complex behavior
+
+See [ROADMAP.md](ROADMAP.md) for detailed timeline and weekly breakdown.
 
 ### Phase 2: Establish Ecosystem (Months 2-3)
 - [ ] Release dev board as open hardware
