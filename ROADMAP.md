@@ -30,7 +30,7 @@ Build the first modular analog/digital hybrid computing platform - a universal s
 - [x] Comprehensive README.md
 - [x] Vision & philosophy documentation
 - [x] Architecture overview
-- [ ] Pin standard finalization (6-pin vs 10-pin decision)
+- [x] Pin standard finalization (10-pin standard adopted)
 - [ ] Protocol specification v0.1
 - [ ] Reference module specifications
 
@@ -38,9 +38,11 @@ Build the first modular analog/digital hybrid computing platform - a universal s
 - [ ] **Universal Dev Board v1.0**
   - Cortex-M4 selection (STM32F4 or similar)
   - Power regulation circuit (48V → 12V → 5V → 3.3V)
+  - 10-pin connector interface (JST-PH or similar)
   - ADC/DAC selection and placement
   - USB-C connector with programming
   - I²C/SPI bus interface
+  - Dual analog/digital ground domains
   - Protection circuits (ESD, overvoltage, reverse polarity)
   - **Target BOM**: $2.50-3.50
 
@@ -366,7 +368,7 @@ Build the first modular analog/digital hybrid computing platform - a universal s
 ## Risk Mitigation
 
 ### Technical Risks:
-- **Pin standard not finalized** → Create both 6-pin and 10-pin versions, let community decide
+- **10-pin connector complexity** → Mitigated: Pure analog modules can leave digital pins unconnected; educational value of proper isolation outweighs initial complexity
 - **Latency protocol complexity** → Start simple, iterate based on real-world usage
 - **BOM cost exceeds target** → Alternative component selection, volume discounts
 

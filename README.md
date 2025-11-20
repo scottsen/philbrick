@@ -127,9 +127,10 @@ Everything else emerges through composition.
 - Separate analog/digital ground domains
 
 ### Pin Standard
-- **6-pin base** (AIN, AOUT, V+, GND, CV, ID) - simple, accessible
-- **10-pin advanced** (separate AVDD/DVDD, AGND/DGND, dual CV) - pro tier
-- JST-PH connectors or similar
+- **10-pin universal standard** (AIN, AOUT, AVDD, DVDD, AGND, DGND, CV, CTRL, CLK, ID/RESET)
+- Proper analog/digital isolation from day one
+- Supports pure analog, pure digital, and hybrid modules
+- JST-PH or similar connectors (~$0.10-0.20 per module)
 
 ### Latency Protocol
 - **Automatic latency measurement** along signal chains
@@ -226,9 +227,9 @@ Total Latency: ~11ms (acceptable for non-feedback path)
 ## Roadmap
 
 ### Phase 1: Prove the Concept (Weeks 1-4)
-- [ ] Define final pin standard (recommend 6-pin base)
+- [x] Define final pin standard (10-pin universal standard adopted)
 - [ ] Build 4 primitive modules (sum, integrate, nonlinearity, trigger)
-- [ ] Create reference dev board design
+- [ ] Create reference dev board design with 10-pin interface
 - [ ] Implement basic latency protocol
 - [ ] Demonstrate composition: simple modules → complex behavior
 
@@ -378,7 +379,7 @@ We believe in open hardware and open source. Build on our work, but share improv
 **Current Phase**: Design & Documentation (v0.1.0-alpha)
 
 **Key Areas for Input**:
-- Pin standard finalization (6-pin vs 10-pin debate)
+- 10-pin connector selection (JST-PH, Molex, or custom)
 - Protocol specification review
 - Reference module designs
 - Dev board BOM optimization

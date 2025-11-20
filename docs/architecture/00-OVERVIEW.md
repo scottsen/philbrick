@@ -46,12 +46,12 @@ A module can be:
 **Principle:** Modular plug-in analog computation
 
 **In Your System:**
-- Standardized module sizes and pin counts
+- Standardized 10-pin connector interface
 - Composable building blocks
 - Routing between blocks
 - Physical signal chain composition
 
-**Critical:** This is your revolution - standardized analog function modules that can be rearranged at will.
+**Critical:** This is your revolution - standardized analog function modules with professional-grade isolation that can be rearranged at will.
 
 ---
 
@@ -138,46 +138,45 @@ Tier 3: +5V, +3.3V Digital Rails (on-module regulators)
 
 ## Module Pin Standard
 
-### The Great Pin Count Debate: 6, 8, or 10?
+### 10-Pin Standard (FINALIZED)
 
-**Minimum Viable (4 pins):**
-- Power
-- Ground
-- Audio In
-- Audio Out
+**Philbrick uses a unified 10-pin connector standard for all modules.** This decision prioritizes professional-grade signal integrity, proper analog/digital isolation, and future-proofing over initial simplicity.
 
-**Smart Analog (6 pins) - RECOMMENDED:**
-1. AIN (Analog In)
-2. AOUT (Analog Out)
-3. V+ (Power, e.g., 48V or 12V)
-4. GND (Ground)
-5. CV/CTRL (Control voltage or digital control)
-6. ID/OPT (Module identification or extra analog I/O)
+**Pin Assignments:**
+1. **AIN** - Analog Input
+2. **AOUT** - Analog Output
+3. **AVDD** - Analog Supply (+12V from 48V backbone)
+4. **DVDD** - Digital Supply (+5V or +3.3V from 48V backbone)
+5. **AGND** - Analog Ground (isolated ground domain)
+6. **DGND** - Digital Ground (isolated ground domain)
+7. **CV** - Control Voltage (0-5V analog control)
+8. **CTRL** - Digital Control (I²C SDA or GPIO)
+9. **CLK** - Clock/Sync (I²C SCL or shared timing reference)
+10. **ID/RESET** - Module identification or reset signal
 
-**Why 6 is the sweet spot:**
-- Simple, cheap, not intimidating
-- Enough for analog + digital hybrid modules
-- Supports both pure analog and DSP blocks
-- Future-proof without being excessive
-- Easy to manufacture (JST-PH connectors)
+**Why 10 pins is the right choice:**
 
-**Awesome Mixed-Signal (10 pins) - for advanced modules:**
-1. AIN
-2. AOUT
-3. AVDD (Analog supply, e.g., +12V)
-4. DVDD (Digital supply, e.g., +5V)
-5. AGND (Analog ground)
-6. DGND (Digital ground)
-7. CV (Control voltage)
-8. CTRL (Digital control - I²C SDA or GPIO)
-9. CLK (I²C SCL or shared clock)
-10. ID/RESET
+1. **Proper Analog/Digital Isolation** - Separate power rails (AVDD/DVDD) and ground domains (AGND/DGND) prevent digital switching noise from polluting analog signals. This is critical for high-fidelity audio and precise analog computation.
 
-**When to use 10 pins:**
-- Analog-neural inference chips
-- High-precision analog compute
-- Modules needing true analog/digital isolation
-- Future "pro" tier modules
+2. **Future-Proof** - Supports all module types from day one:
+   - Pure analog modules (use AVDD/AGND only)
+   - Pure digital/DSP modules (use DVDD/DGND only)
+   - Hybrid modules (use both domains with proper isolation)
+   - Analog-neural inference chips (require separate domains)
+
+3. **Professional-Grade Signal Integrity** - Dual ground domains are standard practice in professional audio and precision analog design. We're not building toys.
+
+4. **Simplified Ecosystem** - One connector standard means:
+   - No "basic vs advanced" module tiers
+   - No compatibility confusion
+   - Consistent mechanical design
+   - Universal motherboard routing
+
+5. **BOM Cost Negligible** - 10-pin JST-PH or similar connectors add ~$0.10-0.20 per module vs 6-pin. Worth it for proper engineering.
+
+6. **Educational Value** - Teaches proper analog/digital domain separation from the start, not as an afterthought.
+
+**Simplified Modules:** Pure analog modules can leave digital pins unconnected. Simple modules only populate AVDD/AGND and signal pins. The 10-pin standard doesn't force complexity - it enables it when needed.
 
 ---
 
@@ -342,13 +341,13 @@ struct ModuleTimingInfo {
 ```
 User Input (guitar pickup)
   ↓
-[Analog Buffer Block] - 6-pin, pure analog, 0.01ms
+[Analog Buffer Block] - pure analog (AVDD/AGND only), 0.01ms
   ↓
-[ML Body Model Block] - 10-pin, hybrid (analog I/O, neural inference), 3ms
+[ML Body Model Block] - hybrid (analog I/O + neural inference, both domains), 3ms
   ↓
-[Analog Color Block] - 6-pin, transformer saturation, 0.02ms
+[Analog Color Block] - pure analog (transformer saturation), 0.02ms
   ↓
-[DSP Reverb Block] - 10-pin, digital, 8ms
+[DSP Reverb Block] - digital (DVDD/DGND + control), 8ms
   ↓
 Main Output
 
@@ -356,7 +355,7 @@ Total Latency: ~11ms (acceptable for non-feedback path)
 Controller knows this, tags chain as "high-latency, not for monitoring"
 ```
 
-**Key Point:** Some modules analog, some digital, some neural. User doesn't care. System manages latency automatically.
+**Key Point:** All modules use the same 10-pin connector. Some use only analog domain, some only digital, some both. The standard accommodates all use cases without requiring different connector types.
 
 ---
 
