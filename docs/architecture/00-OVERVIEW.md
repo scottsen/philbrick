@@ -306,21 +306,41 @@ struct ModuleTimingInfo {
 
 ## Dev Board Architecture
 
-### The Universal Module Dev Board
+**Note**: This section describes two different types of boards:
+1. **Universal Dev Board** - Development platform for testing operator modules (~$48, see [DEV_BOARD_README.md](DEV_BOARD_README.md))
+2. **Operator Module Boards** - Individual function modules that plug into the dev board (~$2.50-5 each, described below)
+
+### Universal Development Platform (Completed Design)
+
+**Purpose**: Test and develop operator modules
+
+**Key Specs**:
+- RP2040 MCU (dual Cortex-M0+, $1)
+- 16-bit ADC (6 channels) + 12-bit DAC (4 channels)
+- ±15V power generation for operators
+- 6x 10-pin operator connectors
+- USB-C connectivity
+- **Total BOM: ~$48** (qty 10)
+
+**See**: [DEV_BOARD_README.md](DEV_BOARD_README.md) for complete design documentation
+
+---
+
+### Individual Operator Module Boards (Future Design)
 
 **Core Component:** Cheap Cortex-M MCU ($0.10 - $1.50)
 - Cortex-M0+/M3/M4 @ 48-120 MHz
 - 64-256 KB flash, 16-64 KB RAM
-- USB Full-Speed device
+- Optional USB for debugging
 - Multiple ADCs (10-12 bit)
 - Timers, PWMs, SPI/I²C/UART
 
 **Built-in Features:**
-- Power regulation: 48V → 12V → 5V → 3.3V ($0.30)
+- Power regulation: ±15V → ±12V/+5V/+3.3V ($0.30)
 - Input/output buffer op-amps ($0.20)
 - Protection (overvoltage, reverse polarity, ESD) ($0.20)
 - Auto-discovery EEPROM ($0.11)
-- USB-C connector with CC resistors ($0.30-0.50)
+- 10-pin connector ($0.20)
 - Programming header (SWD/UART)
 
 **Total BOM: ~$2.50 in volume, sell for $5-10**
